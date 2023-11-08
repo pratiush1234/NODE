@@ -66,3 +66,41 @@ plt.title('Feature Importance')
 
 # Display the plot
 plt.show()
+
+
+
+
+import pandas as pd
+import numpy as np
+import time
+import matplotlib.pyplot as plt
+
+
+scaling_factors = [1,2,3,4,5]
+
+# Create lists to store the number of data points and the corresponding times
+data_points = []
+processing_times = []
+
+# Loop through each scaling factor
+for factor in scaling_factors:
+    # Replicate the base dataset
+    scaled_dataset = pd.concat([train] * factor, ignore_index=True)
+    
+    # Choose a specific operation (e.g., prediction) to measure time for
+    operation_start_time = time.time()
+    # Perform your operation on the scaled_dataset, e.g., prediction
+    prediction = tabular_model.predict(scaled_dataset)
+    operation_end_time = time.time()
+    
+    # Record the number of data points and the time taken for the operation
+    data_points.append(len(scaled_dataset))
+    processing_times.append(operation_end_time - operation_start_time)
+
+# Plot the time vs. data points
+plt.plot(data_points, processing_times)
+plt.xlabel("Number of Data Points")
+plt.ylabel("Processing Time (seconds)")
+plt.title("Scaling Analysis")
+plt.show()
+
